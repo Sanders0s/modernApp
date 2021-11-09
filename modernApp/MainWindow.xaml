@@ -16,7 +16,7 @@
         <viewModel:MainViewModel />
     </Window.DataContext>
     <Window.Resources>
-        <dprop:DependencyProperties x:Key="data" NameAndSurname="{Binding Auxiliary, RelativeSource={RelativeSource Self}}" />
+        <dprop:DependencyProperties x:Key="data" FullName="{Binding Auxiliary, RelativeSource={RelativeSource Self}}" />
     </Window.Resources>
     <Border Background="#272537" CornerRadius="10">
         <Grid>

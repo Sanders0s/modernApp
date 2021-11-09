@@ -11,21 +11,21 @@ namespace modernApp.Properties
     {
         static DependencyProperties()
         {
-            NameAndSurnameProperty = DependencyProperty.Register("NameAndSurname", typeof(string), typeof(DependencyProperties));
+            FullNameDP = DependencyProperty.Register("FullName", typeof(string), typeof(DependencyProperties));
         }
-        public string NameAndSurname
+        public string FullName
         {
             get 
             { 
-                return (string)GetValue(NameAndSurnameProperty); 
+                return (string)GetValue(FullNameDP); 
             }
             set 
             { 
-                SetValue(NameAndSurnameProperty, value); 
+                SetValue(FullNameDP, value); 
             }
         }
 
-        public static readonly DependencyProperty NameAndSurnameProperty;
+        public static readonly DependencyProperty FullNameDP;
 
         private string auxiliary;
         public string Auxiliary

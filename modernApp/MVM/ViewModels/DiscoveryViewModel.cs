@@ -1,4 +1,5 @@
-﻿using GalaSoft.MvvmLight.Messaging;
+﻿using DevExpress.Xpo.Logger;
+using GalaSoft.MvvmLight.Messaging;
 using modernApp.Core;
 using modernApp.Core.Enum;
 using modernApp.MVM.Model;
@@ -10,30 +11,17 @@ namespace modernApp.MVM.ViewModels
 {
     public class DiscoveryViewModel : ObservableObject
     {
+        private ILogger logger;
         private IMessenger messenger;
-        private ObservableCollection<DogBreed> _dogBreedsList;
-        private int counter = 1;
+        private ObservableCollection<DogBreed> dogBreedsList;
         private string breed;
         private DogColours colour;
 
-        private string mess;
-        public string Mess
-        {
-            get
-            {
-                return mess;
-            }
-            set
-            {
-                mess = value;
-            }
-        }
+        public string Message { get; set; }
+
         public string Breed
         {
-            get
-            {
-                return breed;
-            }
+            get{return breed;}
             set
             {
                 breed = value;
@@ -56,60 +44,47 @@ namespace modernApp.MVM.ViewModels
         {
             get
             {
-                return _dogBreedsList;
+                return dogBreedsList;
             }
             set
             {
-                _dogBreedsList = value;
+                dogBreedsList = value;
                 OnPropertyChanged();
             }
-        }
-        public DiscoveryViewModel(IMessenger messenger)
-        {
-            this.messenger = messenger;
-            this.messenger = new Messenger();
         }
 
         public DiscoveryViewModel()
         {
-
-            _dogBreedsList = new ObservableCollection<DogBreed>();
-            _dogBreedsList.Add(new DogBreed { Id = counter, Breed = "Labrador", Colour = DogColours.black });
-            counter++;
-            _dogBreedsList.Add(new DogBreed { Id = counter, Breed = "Daschund", Colour = DogColours.brown });
-            counter++;
-
-            Messenger.Default.Register<NotificationMessage>(this, (message) =>
+            messenger = new Messenger();
+            dogBreedsList = new ObservableCollection<DogBreed>
             {
-                mess = message.Notification;
+            new DogBreed { Id = 1, Breed = "Labrador", Colour = DogColours.Black },
+            new DogBreed { Id = 2, Breed = "Daschund", Colour = DogColours.Brown }
+            };
+            messenger.Register<NotificationMessage>(this, (message) =>
+            {
+                Message = message.Notification;
             });
-        }
-
-        public void NotifyMe(NotificationMessage message)
-        {
-            string token = message.Notification;
         }
 
         public void AddDog()
         {
-            if (breed is not null and not "")
+            if (!string.IsNullOrEmpty(breed))
             {
-                DogBreed newItem = new() { Id = counter++, Breed = Breed, Colour = Colour };
-                _dogBreedsList.Add(newItem);
-                string addBreed = newItem.Breed;
-
+                DogBreed newItem = new() { Id = dogBreedsList.Count+1, Breed = Breed, Colour = Colour };
+                dogBreedsList.Add(newItem);
             }
             else
             {
-                MessageBox.Show("Nie udało się dodać. Spróbuj ponownie");
+                logger.Log(new LogMessage(LogMessageType.Text, "Nie udało się dodać. Spróbuj ponownie"));
             }
         }
 
         public void RemoveDog(int id)
         {
-            DogBreed user = _dogBreedsList.FirstOrDefault(x => x.Id == id);
-            _dogBreedsList.Remove(user);
-            MessageBox.Show("Pomyślnie usunięto podany rekord");
+            DogBreed user = dogBreedsList.FirstOrDefault(x => x.Id == id);
+            dogBreedsList.Remove(user);
+            logger.Log(new LogMessage(LogMessageType.Text, "Pomyślnie usunięto podany rekord"));
         }
     }
 }

@@ -26,16 +26,16 @@ namespace modernApp.MVM.View
             InitializeComponent();
         }
 
-        public int MyProperty
+        public int Quantity
         {
-            get { return (int)GetValue(MyPropertyProperty); }
-            set { SetValue(MyPropertyProperty, value); }
+            get { return (int)GetValue(quantityDependencyProperty); }
+            set { SetValue(quantityDependencyProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for MyProperty.
         // This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty MyPropertyProperty =
-            DependencyProperty.Register("MyProperty", typeof(int), typeof(DiscoveryView),
+        public static readonly DependencyProperty quantityDependencyProperty =
+            DependencyProperty.Register("Quantity", typeof(int), typeof(DiscoveryView),
                 new FrameworkPropertyMetadata(0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
     }
 }

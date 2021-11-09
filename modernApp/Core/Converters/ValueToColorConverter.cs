@@ -12,11 +12,12 @@ namespace modernApp.Core.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if ((double)value < 40)
+            double valueProjection = (double)value;
+            if (valueProjection < 40)
             {
                 return "White";
             }
-            else if ((double)value < 70)
+            else if (valueProjection < 70)
             {
                 return "LightGray";
             }

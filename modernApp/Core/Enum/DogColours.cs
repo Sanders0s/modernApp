@@ -2,9 +2,9 @@
 {
     public enum DogColours
     {
-        white,
-        black,
-        gray,
-        brown
+        White,
+        Black,
+        Gray,
+        Brown
     }
 }

@@ -9,7 +9,7 @@ namespace modernApp.ViewModels
 {
     public class MainViewModel : ObservableObject
     {
-        private object _currentView;
+        private object currentView;
         public RelayCommand HomeViewCommand { get; set; }
         public RelayCommand DiscoveryViewCommand { get; set; }
         public RelayCommand AdditionalViewCommand { get; set; }
@@ -18,10 +18,10 @@ namespace modernApp.ViewModels
         public AdditionalViewModel AdditionalVM { get; set; }
         public object CurrentView
         {
-            get { return _currentView; }
+            get { return currentView; }
             set
             {
-                _currentView = value;
+                currentView = value;
                 OnPropertyChanged();
             }
         }

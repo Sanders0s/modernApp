@@ -33,6 +33,7 @@ namespace modernApp.MVM.View
 
         private void Border_MouseLeave(object sender, MouseEventArgs e)
         {
+            LoadCommand?.Execute(null);
             if (LoadCommand != null)
             {
                 LoadCommand.Execute(null);
