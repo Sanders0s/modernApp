@@ -1,0 +1,53 @@
+﻿<UserControl
+    x:Class="modernApp.MVM.View.AdditionalView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:conv="clr-namespace:modernApp.Core.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    xmlns:local="clr-namespace:modernApp.MVM.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <conv:ValueToColorConverter x:Key="ValueToColorConverter" />
+    </UserControl.Resources>
+    <StackPanel>
+        <Slider
+            x:Name="mySlider"
+            Width="80"
+            Height="10"
+            Background="Red"
+            Maximum="100"
+            Minimum="0"
+            Value="50" />
+        <TextBox
+            x:Name="myBox"
+            Margin="0,30,0,0"
+            Background="{Binding Value, Converter={StaticResource ValueToColorConverter}, ElementName=mySlider}"
+            Text="{DXBinding '@e(mySlider).Value',
+                             UpdateSourceTrigger=PropertyChanged}" />
+
+        <TabControl Margin="0,20,0,0" FontSize="16">
+            <TabItem
+                Foreground="White"
+                Header="First"
+                Template="{DXBinding '@r(TabItemTheme)'}">
+                <TextBlock Text="Welcome" />
+            </TabItem>
+            <TabItem
+                Foreground="White"
+                Header="Second"
+                Template="{Binding Source={StaticResource TabItemTheme}}">
+                <Label Content="{x:Static sys:DateTime.Now}" ContentStringFormat="dd-MM-yyyy" />
+            </TabItem>
+        </TabControl>
+        <Image
+            Width="{Binding Value, ElementName=mySlider}"
+            Height="{Binding Value, ElementName=mySlider}"
+            Source="/Images/dogo.png" />
+    </StackPanel>
+</UserControl>

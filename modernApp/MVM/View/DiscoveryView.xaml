@@ -1,0 +1,65 @@
+﻿<UserControl
+    x:Class="modernApp.MVM.View.DiscoveryView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:System="clr-namespace:System;assembly=mscorlib"
+    xmlns:conv="clr-namespace:modernApp.Core.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:enum="clr-namespace:modernApp.Core.Enum"
+    xmlns:loc="clr-namespace:modernApp"
+    xmlns:local="clr-namespace:modernApp.Core.Enum"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:someCheats="clr-namespace:modernApp"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:view="clr-namespace:modernApp.MVM.View"
+    xmlns:viewModel="clr-namespace:modernApp.MVM.ViewModels"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="bred" Color="Red" />
+        <ObjectDataProvider
+            x:Key="dataFromMyEnum"
+            MethodName="GetValues"
+            ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="local:DogColours" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <conv:IsEmptyConverter x:Key="IsEmptyConverter" />
+    </UserControl.Resources>
+    <StackPanel Background="Transparent">
+        <TextBlock
+            Margin="20,0,0,20"
+            HorizontalAlignment="Left"
+            FontSize="28"
+            Foreground="White"
+            Text="Let's check our list" />
+        <StackPanel
+            Width="100"
+            Margin="10,0,0,0"
+            HorizontalAlignment="Left">
+            <Label
+                x:Name="breedLabel"
+                Content="Breed"
+                Foreground="White" />
+            <TextBox x:Name="InputBreed" Text="{DXBinding 'Breed'}" />
+            <Label Content="Colour" Foreground="White" />
+            <ComboBox
+                ItemsSource="{DXBinding '@r(dataFromMyEnum)'}"
+                SelectedItem="{DXBinding 'Colour'}"
+                Text="Colour" />
+            <Button
+                x:Name="AddDog"
+                Width="100"
+                Height="40"
+                Margin="0,30,0,0"
+                Command="{DXCommand Execute='AddDog()'}"
+                Content="Add"
+                IsEnabled="{DXBinding '@e(InputBreed).Text',
+                                      Converter={StaticResource IsEmptyConverter}}"
+                Style="{DXBinding '@r(RoundedButtonTheme)'}" />
+        </StackPanel>
+        <loc:ListOfDogos />
+    </StackPanel>
+</UserControl>

@@ -1,0 +1,20 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ControlTemplate x:Key="TabItemTheme" TargetType="{x:Type TabItem}">
+        <Border
+            x:Name="ContentPresenterBorder"
+            Width="80"
+            Margin="2,0"
+            Padding="9"
+            BorderBrush="Red"
+            BorderThickness="1,1,1,0"
+            CornerRadius="5,5,0,0">
+            <ContentPresenter HorizontalAlignment="Center" ContentSource="Header" />
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter TargetName="ContentPresenterBorder" Property="BorderThickness" Value="2,2,2,0" />
+                <Setter TargetName="ContentPresenterBorder" Property="BorderBrush" Value="Green" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+</ResourceDictionary>
